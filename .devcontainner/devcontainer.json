@@ -3,9 +3,6 @@
     "hostRequirements": {
       "cpus": 4
     },
-    "waitFor": "onCreateCommand",
-    "updateContentCommand": "cd tutorail",
-    "postCreateCommand": "",
     "customizations": {
       "codespaces": {
         "openFiles": ["tutorail/README.md"]
