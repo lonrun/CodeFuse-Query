@@ -1,9 +1,9 @@
 name: GDL script file checker
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   example-job:
@@ -14,5 +14,5 @@ jobs:
     steps:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4  
-      - name: Run a script
-        run: ./my-script.sh
+      - name: Run GDL script checking
+        run: ./gdl_check.sh
