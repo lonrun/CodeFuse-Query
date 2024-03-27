@@ -13,6 +13,8 @@ jobs:
         working-directory: ./scripts
     steps:
       - name: Check out the repository to the runner
-        uses: actions/checkout@v4  
+        uses: actions/checkout@v4 
+      - name: Set execute permissions for script
+        run: chmod +x ./check_gdl.sh
       - name: Run GDL script checking
         run: ./check_gdl.sh
