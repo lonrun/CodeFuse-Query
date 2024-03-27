@@ -1,9 +1,5 @@
 #!/bin/bash
 set +x
-localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
-export LC_ALL=zh_CN.UTF-8
-
-cd / && curl -o sparrow-cli.tar.gz "https://github.com/codefuse-ai/CodeFuse-Query/releases/download/2.0.2/sparrow-cli-2.0.2.linux.tar.gz" && tar -xzvf sparrow-cli.tar.gz  && rm -rf sparrow-cli.tar.gz
 
 # Check if the parameter is empty
 if [ -z "$1" ]; then
