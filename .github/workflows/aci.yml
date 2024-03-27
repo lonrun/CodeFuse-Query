@@ -15,4 +15,4 @@ jobs:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4  
       - name: Run GDL script checking
-        run: ./gdl_check.sh
+        run: ./check_gdl.sh
