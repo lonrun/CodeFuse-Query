@@ -4,14 +4,32 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   example-job:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository to the runner
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
+
+      - name: Install locales
+        run: |
+          sudo apt-get update && sudo apt-get install -y locales
+          sudo locale-gen zh_CN.UTF-8
+        env:
+          LANG: zh_CN.UTF-8
+          LANGUAGE: zh_CN:zh:en_US:en
+
       - name: Set execute permissions for script
-        run: chmod +x scripts/check_gdl.sh
+        run: chmod +x ./scripts/check_gdl.sh
+
+      - name: Download and extract sparrow-cli
+        run: |
+          mkdir -p $HOME/sparrow-cli
+          curl -o $HOME/sparrow-cli/sparrow-cli.tar.gz "https://github.com/codefuse-ai/CodeFuse-Query/releases/download/2.0.2/sparrow-cli-2.0.2.linux.tar.gz"
+          tar -xzvf $HOME/sparrow-cli/sparrow-cli.tar.gz -C $HOME/sparrow-cli
+          rm $HOME/sparrow-cli/sparrow-cli.tar.gz
+
       - name: Run GDL script checking
-        run: scripts/check_gdl.sh .
+        run: ./scripts/check_gdl.sh .
+        env:
+          LC_ALL: zh_CN.UTF-8
