@@ -19,21 +19,13 @@ jobs:
           LANG: zh_CN.UTF-8
           LANGUAGE: zh_CN:zh:en_US:en
 
-      - name: Set execute permissions for script
-        run: chmod +x ./scripts/check_gdl.sh
-
       - name: Download and extract the latest sparrow-cli release
         run: |
-          # Set up the repository owner and repository name
-          REPO_OWNER="codefuse-ai"
-          REPO_NAME="CodeFuse-Query"
           ASSET_NAME="sparrow-cli.*.linux.tar.gz" # This pattern should match only the tar.gz file
-      
-          # Create the directory where the asset will be downloaded
           mkdir -p $HOME/sparrow-cli
       
           # Use GitHub API to get the latest release information
-          RELEASE_INFO=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/releases/latest")
+          RELEASE_INFO=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/codefuse-ai/CodeFuse-Query/releases/latest")
       
           # Extract the asset download URL for the asset name specified
           # The test function is used to ensure we match only the tar.gz file, not the checksum file
@@ -52,6 +44,9 @@ jobs:
           # The GitHub token is needed for API requests to avoid rate limits
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set execute permissions for script
+        run: chmod +x ./scripts/check_gdl.sh
+        
       - name: Run GDL script checking
         run: ./scripts/check_gdl.sh .
         env:
