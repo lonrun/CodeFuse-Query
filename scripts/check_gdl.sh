@@ -88,12 +88,10 @@ get_target_files() {
 }
 
 files=$(get_target_files "$PWD")
-echo "Checking Files: $files"
 
 # Iterate over the files
 for file in $files; do
-  echo "Checking file $file ..."
-  
+
   # Run the godel command and capture the output
   output=$("$sparrow_godel_script" "$file" "-p" "$sparrow_lib_1_0" -o "${file%.*}_tmp.gdl" 2>&1)
   
