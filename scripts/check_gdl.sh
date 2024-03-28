@@ -112,7 +112,7 @@ done
 
 # Define get_target_files function
 get_target_files() {
-  find "$1" -type f \( -name "*.gs" -o -name "*.gdl" \) -not -path "$1/language/*/lib/*"
+  find "$1" -type f \( -name "*.gs" -o -name "*.gdl" \) -not -name "tempfile.*.gdl" -not -path "$1/language/*/lib/*"
 }
 
 files=$(get_target_files "$PWD")
