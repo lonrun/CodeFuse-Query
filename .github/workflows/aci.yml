@@ -29,6 +29,28 @@ jobs:
           tar -xzvf $HOME/sparrow-cli/sparrow-cli.tar.gz -C $HOME/sparrow-cli
           rm $HOME/sparrow-cli/sparrow-cli.tar.gz
 
+      - name: Download and extract the latest sparrow-cli release
+        run: |
+          # Set up the name
+          ASSET_NAME="sparrow-cli.linux.tar.gz"
+      
+          # Create the directory where the asset will be downloaded
+          mkdir -p $HOME/sparrow-cli
+      
+          # Use GitHub API to get the latest release information
+          RELEASE_INFO=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/codefuse-ai/CodeFuse-Query/releases/latest")
+      
+          # Extract the asset download URL for the asset name specified
+          ASSET_URL=$(echo "$RELEASE_INFO" | jq --arg asset_name "$ASSET_NAME" -r '.assets[] | select(.name | contains($asset_name)).browser_download_url')
+          echo "Downloading $ASSET_URL to $HOME/sparrow-cli/sparrow-cli.tar.gz"
+      
+          # Download and extract the asset in one line to avoid intermediate file
+          curl -fL --retry 5 "$ASSET_URL" | tar -xz -C $HOME/sparrow-cli
+        env:
+          # The GitHub token is needed for API requests to avoid rate limits
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
       - name: Run GDL script checking
         run: ./scripts/check_gdl.sh .
         env:
